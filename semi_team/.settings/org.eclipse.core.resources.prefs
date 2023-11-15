@@ -1,0 +1,14 @@
+eclipse.preferences.version=1
+encoding//src/main/java/Createplaylist/ImageServlet.java=UTF-8
+encoding//src/main/java/Createplaylist/UploadServlet.java=UTF-8
+encoding//src/main/java/Delete/DeleteServlet.java=UTF-8
+encoding//src/main/java/LoginServlet.java=UTF-8
+encoding//src/main/java/insert/InsertDAO.java=UTF-8
+encoding//src/main/java/modifyInfoServlet.java=UTF-8
+encoding//src/main/java/playlist/PlayListDAO.java=UTF-8
+encoding//src/main/java/playlist/PlayListServlet.java=UTF-8
+encoding//src/main/java/search/Music_info.java=UTF-8
+encoding//src/main/java/search/Playlist_info.java=UTF-8
+encoding//src/main/java/search/SearchDAO.java=UTF-8
+encoding//src/main/java/search/SearchServlet.java=UTF-8
+encoding//src/main/java/search/User_info.java=UTF-8
