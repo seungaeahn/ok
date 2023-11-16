@@ -82,6 +82,8 @@
 										<button aria-label="Minimize"></button>
 										<button aria-label="Maximize"></button>
 										<button aria-label="Close"></button>
+										<button aria-label="Play Button"></button>
+										
 									</div>
 								</div>
 								<div style="float: left; margin-left: 15px; width:100px; height: 100px; margin-top: 10px; background-color: white; box-shadow:inset;">
@@ -89,7 +91,7 @@
 								</div>
 								<div style="float:right; width: 50%; text-align: left;">
 									<div style="margin-top:20px; width:200px; height: 30px;"><p>[ <%=p.getPlaylist_name()%> ]</p></div>
-									<div><p>user : <%=p.getUser_id()%> ( <%=p.getCreate_date()%> )</p></div>
+									<div><p>user : <%=p.getUser_id()%> </p></div>
 									<button style="margin-top: 5px;">자세히 보기</button>
 								</div>
                     		</div>
@@ -99,6 +101,23 @@
                     </div>
                 </article>
             </section>
+             <aside>
+        
+		 <%
+	 	//만약 mno값이 존재할 경우 빈(null)값이 아닐경우
+	 	
+	 	if(session.getAttribute("user_id") != null){
+	 %>
+	 <button id="logoutButton" style="margin-top: 800px; margin-left: 1450px" onclick="location.href='logout.jsp'">
+         <img src="images/로그아웃.png" style="width:85px; padding:0;" alt="Logout Icon" >
+          <p style="margin-top: 7px;"><strong>Logout</strong></p>
+     </button>
+	 	
+	 <%
+	 	}
+	
+	%>
+        </aside>
         </div><!--container-->
         <script>
         

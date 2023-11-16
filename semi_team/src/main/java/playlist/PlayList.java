@@ -12,10 +12,11 @@ public class PlayList {
 
 	
 
-	public PlayList(int playlistId, String playlistName, String user_id ,String Image) {
+	public PlayList(int playlistId, String user_id, String playlistName, String Image) {
 		this.playlistId = playlistId;
-		this.playlistName = playlistName;
 		this.user_id = user_id;
+		this.playlistName = playlistName;
+		
 		this.Image = Image;
 	}
 

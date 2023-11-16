@@ -34,13 +34,13 @@
     
         </style>
         <link rel="stylesheet" href="./css/all.css">
-        <link rel="stylesheet" href="main.css">
+        <link rel="stylesheet" href="main승애.css">
     </head>
     <body>
      <div class="container" style="margin-top:30px;">
         <aside>
             <button style="margin-top: 250px;">
-                <img src="images/mypageA.png" style="width:85px; padding:0;" alt="myPage Icon">
+                <img src="images/mypageA.png" style="width:85px; padding:0;" alt="myPage Icon" >
                 <p><strong>My Page</strong></p>
             </button>
             <button style="margin-top: 50px;">
@@ -51,7 +51,6 @@
                 <img src="images/pixel_search.png" style="width:85px; padding:0;" alt="Search Icon" onclick="location.href='music_search.jsp'">
                 <p><strong>search</strong></p>
             </button>
-            
             
         </aside>
 		
@@ -95,7 +94,7 @@
                         
                         
                         <div class="flex-grow-1 ms-3">
-                          <h3><%= userinfo.getUserNickname() %></h3>
+                          <h4><%= userinfo.getUserNickname() %></h4>
                           <h4><%= userinfo.getUserId() %></h4>
                           <h4><%= userinfo.getEmail() %></h4>
                       
@@ -104,6 +103,21 @@
 			             
 			            </button>
 			            <br>
+			            
+			          <%
+					 	//만약 mno값이 존재할 경우 빈(null)값이 아닐경우
+					 	
+					 	if(session.getAttribute("user_id") != null){
+					 %>
+					 <button id="logoutButton" style="margin-top: 10px; background-color: transparent" onclick="location.href='logout.jsp'">
+				         <img src="images/로그아웃.png" style="width:85px; padding:0;" alt="Logout Icon" >
+				     </button>
+					 	
+					 <%
+					 	}
+					
+					%>
+				        <br>
 			            <br>
 			            <br>
 			            <form action="DeleteUserInfoServlet" method="post" id="deleteForm">
@@ -128,17 +142,21 @@
              <div class="col-md-6">
             <div class="white-box">
               <div class="mb-5">
-              <img class="profile" src="images/headset.gif" style="width: 80px; height: 80px;">   
-                <h3>My Playlist</h3>
+             <span style="display: flex; align-items: center;">
+			    <img class="profile" src="images/headset.gif" style="width: 60px; height: 60px;">
+			    <h3 style="margin-left: 10px; margin-top: 0; margin-bottom: 0;">My playlist</h3>
+			</span>
+			<br>
                 <%
+                String id_2 = (String) session.getAttribute("user_id");
  				   //회원의 플레이 리스트 가져오기!!!!
                 PlayListDAO playlistDAO = new PlayListDAO();
-				List<PlayList> playlists = playlistDAO.getAllPlaylists();
+				List<PlayList> playlists = playlistDAO.getAllPlaylists(id_2);
 		
 				for(PlayList p : playlists){
                 %>
                 <div style="display: inline-block; margin: 10px;">
-                    <img class="profile" src="<%= p.getImage() %>" style="width: 200px; height: 200px;">
+                    <a href="playListDetail.jsp?playlistId=<%=p.getPlaylistId()%>"><img class="profile" src="<%= p.getImage() %>" style="width: 180px; height: 180px;"></a>
                     <div><p><strong><%=p.getPlaylistName()%></strong></p></div>
                     
                 </div>
@@ -161,8 +179,11 @@
           <div class="col-md-6">
             <div class="white-box">
               <div class="mb-5">
-              <img class="profile" src="images/blueheart.gif" style="width: 80px; height: 80px;">   
-                <h3>Followings</h3>
+              <span style="display: flex; align-items: center;">
+              <img class="profile" src="images/blueheart.gif" style="width: 60px; height: 60px;">   
+                <h3 style="margin-left: 10px; margin-top: 0; margin-bottom: 0">Followings</h3>
+                </span>
+                <br>
                 <%
                 
                 
@@ -192,10 +213,14 @@
 
 
 
-
                 </article>
             </div>
+            
         </section>
+        
+        
+         
+        
         </div>
 
 

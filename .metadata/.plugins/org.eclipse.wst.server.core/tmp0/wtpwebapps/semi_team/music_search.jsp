@@ -15,16 +15,21 @@
         <title>SHINee Music</title>
         <link rel="stylesheet" type="text/css" href="css/search.css">
         <link rel="stylesheet" type="text/css" href="css/all.css">
+        <style>
+        	/*#playlistArea{
+        		display: block;
+        	}*/
+        </style>
     </head>
     <body>
         <div class="container" style="margin-top:30px;">
             <aside>
 	                <button id="gotoMyPageButton" style="margin-top: 250px;">
-	                    <img src="images/mypageA.png" style="width:85px; padding:0;" alt="myPage Icon" onclick="location.href='mypageMain.jsp'">
+	                    <img src="images/mypageA.png" style="width:85px; padding:0;" alt="myPage Icon">
 	                    <p><strong>mypage</strong></p>
 	                </button>
 	                <button id="gotoMyPlaylistButton" style="margin-top: 50px;">
-	                    <img src="images/lookaround.png" style="width:85px; padding:0;" alt="lookaround Icon" onclick="location.href='playList.jsp'">
+	                    <img src="images/lookaround.png" style="width:85px; padding:0;" alt="lookaround Icon">
 	                    <p><strong>my<br>Playlist</strong></p>
 	                </button>
 	                <button id="gotoSearchButton" style="margin-top: 50px;">
@@ -62,65 +67,78 @@
                         <!--검색결과 올라가는 곳-->
 
                         <%	
- 
+                        	InsertDAO insertDAO = new InsertDAO();
+                        	String session_user_id = (String)session.getAttribute("user_id");
+                        	ArrayList<Playlist_info> myplaylists = insertDAO.getAllPlaylist(session_user_id);
+                        	
                         	SearchDAO searchDAO = new SearchDAO();
                         	ArrayList<Music_info> musicList = searchDAO.getSearchMusics(request.getParameter("searchText"));
                         	
+                        	
                         	//검색결과 없을경우 보일 창
-                        	if(musicList.size() == 0){	
+                        	if(musicList.size() == 0){
 						%>
 							<img src="images/텅.png" style="margin-top:100px; width:250px;">
 							<p>검색 결과가 존재하지 않습니다.</p>
-						<%		
+						<% 		
                         	}
+                        %>
                         	
+                        <%
 	                        for(Music_info m : musicList) {
 	                        	
                         %>           	        
-							<!-- <p>제목 : < %=m.getSong_name()%> 가수 : < %=m.getArtist_name()%></p> -->
-							<div class="window" style="width: 500px; height:150px; float: left; margin-left: 80px; margin-bottom: 10px;">
+							<div class="window" style="width: 500px; height:150px; margin-left: 350px; margin-bottom: 10px;">
+							
 								<div class="title-bar">
 									<div class="title-bar-text">
 										music_info
 									</div>
 									<div class="title-bar-controls">
-										<button aria-label="Minimize"></button>
-										<button aria-label="Maximize"></button>
-										<button aria-label="Close"></button>
+										<button type="button" aria-label="Minimize"></button>
+										<button type="button" aria-label="Maximize"></button>
+										<button type="button" aria-label="Close"></button>
 									</div>
 								</div>
 								<div style="float: left; margin-left: 15px; width:100px; height: 100px; margin-top: 10px; background-color: white; box-shadow:inset;">
-									<img src="images/텅.png" style="height: 100px;">
+									<img src="#" alt="앨범이미지" style="height: 100px;">
 								</div>
 								<div style="float:right; width: 50%; text-align: left;">
 									<div style="margin-top:20px; width:150px; height: 30px;"><p>제목 : <%=m.getSong_name()%></p></div>
 									<div><p>가수 : <%=m.getArtist_name()%></p></div>
-									<button style="margin-top: 5px;">add to myPlaylist</button>
+									<form action="music_add.jsp">
+										<input type="hidden" name="song_id" value="<%=m.getSong_id()%>">
+										<button id="addMusicButton" type="submit" style="margin-top: 5px;">add to myPlaylist</button>
+									</form>
 								</div>
-                    		</div>
+                    		</div><!-- div class="window" -->
                     		
-                    		<div style="float:right; width:400px; height:100px; border:solid; margin-right: 80px;">
-		                    	<p>나의 플레이리스트</p>
-		                    	<select name="playlistFiled">
-		                    		<%
-				                    	InsertDAO insertDAO = new InsertDAO();
-				                        ArrayList<Playlist_info> myplaylists = insertDAO.getAllPlaylist((String)session.getAttribute("user_id"));
-				                        		
-				                        for(Playlist_info p : myplaylists) {
-				                    %>
-				                        <option value=<%=p.getPlaylist_name()%>><%=p.getPlaylist_name()%></option>
-				                    <%
-				                        };
-				                    %>
-		                    	</select>
-		                    	<button>저장</button>
-		                    </div>
 						<%
-							}
+							} //for(Music_info m : musicList)	
+							
 						%>
+							
+						
                     </div>
                 </article>
             </section>
+             <aside>
+        
+		 <%
+	 	//만약 mno값이 존재할 경우 빈(null)값이 아닐경우
+	 	
+	 	if(session.getAttribute("user_id") != null){
+	 %>
+	 <button id="logoutButton" style="margin-top: 800px; margin-left: 1450px" onclick="location.href='logout.jsp'">
+         <img src="images/로그아웃.png" style="width:85px; padding:0;" alt="Logout Icon" >
+          <p style="margin-top: 7px;"><strong>Logout</strong></p>
+     </button>
+	 	
+	 <%
+	 	}
+	
+	%>
+        </aside>
         </div><!--container-->
         <script>
         
@@ -151,6 +169,7 @@
 			document.getElementById("user_searchButton").addEventListener("click",()=>{
 				window.location.href = "user_search.jsp";
 			});
+			
         </script>
     </body>
 </html>

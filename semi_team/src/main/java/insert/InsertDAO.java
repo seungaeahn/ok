@@ -21,16 +21,14 @@ public class InsertDAO {
 	
 	Connection connection = null;
 
-	//占시뤄옙占싱몌옙占쏙옙트id 占쌉력받곤옙, 占쌔댐옙占싹울옙 占쌩곤옙占싹댐옙...占쌨쇽옙占쏙옙
+	//플레이리스트id 입력받고, 해당목록에 추가하는...메서드
 	public Music_info insertMusictoPlaylist(int playlist_id, String song_id) {
-		
-		String searchSQL = null;
 
 		Connection connection = null;
 		PreparedStatement insertState = null;
 		ResultSet resultSet = null;
 		
-		String insertSQL = "INSERT INTO playlist_music VALUES(?,?)";
+		String insertSQL = "INSERT INTO playlist_song VALUES(?,?)";
 		
 		try {
 			Class.forName("oracle.jdbc.OracleDriver");
@@ -54,7 +52,7 @@ public class InsertDAO {
 		
 	}
 	
-	//占쏙옙占쏙옙 id占쏙옙 占쏙옙占쏙옙占쏙옙 占쏙옙체 占시뤄옙占싱몌옙占쏙옙트 占쏙옙회 占쌨쇽옙占쏙옙
+	//유저 id로 유저의 전체 플레이리스트 조회 메서드
 	public ArrayList<Playlist_info> getAllPlaylist(String user_id){
 		
 		String searchSQL = null;
@@ -63,7 +61,7 @@ public class InsertDAO {
 		PreparedStatement searchState = null;
 		ResultSet resultSet = null;
 		
-		//2. 占썼열 占쏙옙占썽러占쌈쏙옙占싹댐옙 占쏙옙占쏙옙
+		//2. 배열 만들러왓습니다 총총
 		ArrayList<Playlist_info> myplaylists = new ArrayList<>();
 		
 		try {
@@ -87,8 +85,8 @@ public class InsertDAO {
 				playlist_info.setPlaylist_id(resultSet.getInt("playlist_id"));
 				playlist_info.setPlaylist_name(resultSet.getString("playlist_name"));
 
-				//1. 占썼열占쏙옙 占쏙옙체 占쏙옙占쏙옙占쏙옙占쏙옙占� 占싹댐옙 占썼열 占쏙옙占쏙옙占쏙옙챨篤占�
-				//3. 占쏙옙占쏙옙占쏙옙擔占쏙옙求占� 占쏙옙占쏙옙鳴篤占�
+				//1. 배열에 객체 담고싶은디 일단 배열 만들고올게용
+				//3. 만들고왓습니다 담아줄게요
 				myplaylists.add(playlist_info);
 			}
 			

@@ -2,29 +2,22 @@ package search;
 
 import java.util.Date;
 
+
 public class Playlist_info {
 
-	//占쏙옙占쏙옙占쏙옙占�
+	//멤버변수
 	int playlist_id;
 	String user_id;
 	String playlist_name;
-	Date create_date;
+	String image;
 	
-	//占쏙옙占쏙옙占쏙옙
-	
-	
-	//占시뤄옙占싱몌옙占쏙옙트 占싯삼옙 占쏙옙占쏙옙占쏙옙
-	
-	
-	public Playlist_info() {
-		
-	}
+	//생성자
+	public Playlist_info() {}
 	
 	//플레이리스트 검색 생성자
-	public Playlist_info(String user_id, String playlist_name, Date create_date) {
+	public Playlist_info(String user_id, String playlist_name) {
 		this.user_id = user_id;
 		this.playlist_name = playlist_name;
-		this.create_date = create_date;
 	}
 
 	
@@ -42,9 +35,6 @@ public class Playlist_info {
 		return playlist_name;
 	}
 
-	public Date getCreate_date() {
-		return create_date;
-	}
 
 	//Setter----------------------------------
 	
@@ -60,9 +50,14 @@ public class Playlist_info {
 		this.playlist_name = playlist_name;
 	}
 
-	public void setCreate_date(Date create_date) {
-		this.create_date = create_date;
+	public String getImage() {
+		return image;
 	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+
 	
 	
 }

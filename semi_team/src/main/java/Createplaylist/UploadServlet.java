@@ -33,7 +33,7 @@ public class UploadServlet extends HttpServlet {
 		String jdbcPW = "shinee";
 		
 		String title = request.getParameter("title");
-		String user_id = "im2ho"; //占쌈시뤄옙 占쏙옙占쏙옙占쏙옙 占쌍억옙占�. 占싸깍옙占쏙옙 占쏙옙占쏙옙占쏙옙 占쌨아울옙占쏙옙 占쏙옙占실울옙占쏙옙 占쏙옙 占쏙옙占싶억옙占쏙옙
+		String user_id = request.getParameter("user_id");; //占쌈시뤄옙 占쏙옙占쏙옙占쏙옙 占쌍억옙占�. 占싸깍옙占쏙옙 占쏙옙占쏙옙占쏙옙 占쌨아울옙占쏙옙 占쏙옙占실울옙占쏙옙 占쏙옙 占쏙옙占싶억옙占쏙옙
 		Part imagePart = request.getPart("image");
 		
 		try {
@@ -44,13 +44,13 @@ public class UploadServlet extends HttpServlet {
 		}
 		try {
 			Connection conn = DriverManager.getConnection(jdbcURL, jdbcUser, jdbcPW);
-			String sql = "INSERT INTO playlist_info(playlist_id,playlist_name,user_id,image)"+
+			String sql = "INSERT INTO playlist_info(playlist_id, user_id, playlist_name, image)"+
 			"VALUES(playlist_seq.nextval,?,?,?)";
 			
 			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, user_id);
+			ps.setString(2, title);
 			
-			ps.setString(1, title);
-			ps.setString(2, user_id);
 			ps.setBinaryStream(3, imagePart.getInputStream(),(int) imagePart.getSize());
 			
 			ps.executeUpdate();

@@ -63,8 +63,9 @@ public class SHINeeRegisterServlet extends HttpServlet {
 			PreparedStatement ps = con.prepareStatement(sql);
 			ps.setString(1, id);
 			ps.setString(2, name);
-			ps.setString(3, pw);
-			ps.setString(4, Nname);
+			
+			ps.setString(3, Nname);
+			ps.setString(4, pw);
 			ps.setString(5, email);
 			ps.setString(6, phoneNumber);
 			ps.setBinaryStream(7, profile_img.getInputStream(),(int) profile_img.getSize());

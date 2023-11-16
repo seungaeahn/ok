@@ -26,19 +26,22 @@ public class PlayListDAO {
 			e.printStackTrace();
 		}
 	}
-	public List<PlayList> getAllPlaylists(){
+	public List<PlayList> getAllPlaylists(String user_id){
 		List<PlayList> playlists = new ArrayList<>();
+		
 		
 		try {
 			Connection connection = DriverManager.getConnection(jdbcURL, jdbcUsername, jdbcPassword);
-			String sql = "SELECT * FROM playlist_info";
+			
+			String sql = "SELECT * FROM playlist_info WHERE user_id=?";
 			PreparedStatement ps = connection.prepareStatement(sql);
+			ps.setString(1, user_id);
 			ResultSet resultSet = ps.executeQuery();
 			
 			while(resultSet.next()) {
 				int playlistId = resultSet.getInt("playlist_id");
 				String playlistName = resultSet.getString("playlist_name");
-				String user_id = resultSet.getString("user_id");
+				user_id = resultSet.getString("user_id");
 				Blob Image = resultSet.getBlob("image");
 				byte[] imageData = Image.getBytes(1, (int) Image.length());
 				String imageBase64 = Base64.getEncoder().encodeToString(imageData);
@@ -46,7 +49,7 @@ public class PlayListDAO {
 				
 				
 			    
-				PlayList playlist = new PlayList(playlistId,playlistName,user_id,image);
+				PlayList playlist = new PlayList(playlistId,user_id, playlistName,image);
 				playlists.add(playlist);
 			}
 
@@ -73,13 +76,14 @@ public class PlayListDAO {
 			//new playlist �씠�슜�빐�꽌 媛� 媛��졇�삤湲�
 			if(resultSet.next()) {
 				playlistId = resultSet.getInt("playlist_id");
-				String playlistName = resultSet.getString("playlist_name");
 				String user_id = resultSet.getString("user_id");
-				Blob Image = resultSet.getBlob("Image");
-				byte[] imageData = Image.getBytes(1, (int) Image.length());
+				String playlistName = resultSet.getString("playlist_name");
+				
+				Blob image = resultSet.getBlob("image");
+				byte[] imageData = image.getBytes(1, (int) image.length());
 				String imageBase64 = Base64.getEncoder().encodeToString(imageData);
-				String image = "data:image/jpeg;base64," + imageBase64;
-				playlist = new PlayList(playlistId, playlistName,user_id,image);
+				String Image = "data:image/jpeg;base64," + imageBase64;
+				playlist = new PlayList(playlistId, user_id, playlistName,Image);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

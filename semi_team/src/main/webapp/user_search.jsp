@@ -30,6 +30,7 @@
 	                    <img src="images/pixel_search.png" style="width:85px; padding:0;" alt="Search Icon">
 	                    <p><strong>search</strong></p>
 	                </button>
+	                
             </aside>
             <section>
                 <div class="bluetop" style="margin-top:20px; width:1200px;">
@@ -97,8 +98,28 @@
 							}
 						%>
                     </div>
+                    
                 </article>
+                
             </section>
+             <aside>
+        
+		 <%
+	 	//만약 mno값이 존재할 경우 빈(null)값이 아닐경우
+	 	
+	 	if(session.getAttribute("user_id") != null){
+	 %>
+	 <button id="logoutButton" style="margin-top: 800px; margin-left: 1450px" onclick="location.href='logout.jsp'">
+         <img src="images/로그아웃.png" style="width:85px; padding:0;" alt="Logout Icon" >
+          <p style="margin-top: 7px;"><strong>Logout</strong></p>
+     </button>
+	 	
+	 <%
+	 	}
+	
+	%>
+        </aside>
+             
         </div><!--container-->
         
         <script>

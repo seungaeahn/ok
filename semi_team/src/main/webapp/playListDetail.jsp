@@ -6,6 +6,12 @@
     <%@ page import = "search.SearchDAO" %>
 	<%@ page import = "search.Music_info" %>
 	<%@ page import = "search.Playlist_info" %>
+	<%@ page import = "music.MusicList" %>
+	<%@ page import = "music.MusicListDAO" %>
+	<%@ page import="java.util.List" %>
+	<%@ page import="com.kh.mypage.UserInfo" %>
+<%@ page import="com.kh.mypage.MyPageDAO" %>
+	
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,28 +22,27 @@
 </head>
 <body>
 <div class="container" style="margin-top:30px;">
-            <aside>
-                <button style="margin-top: 50px;">
-                    <img src="images/mypageA.png" style="width:85px; padding:0;" alt="myPage Icon">
-                    <p><strong>mypage</strong></p>
-                </button>
-                <button style="margin-top: 250px;">
-                    <img src="images/pixel_search.png" style="width:85px; padding:0;" alt="Search Icon">
-                    <p><strong>search</strong></p>
-                </button>
-                <button style="margin-top: 50px;">
-                    <img src="images/lookaround.png" style="width:85px; padding:0;" alt="lookaround Icon">
-                    <p><strong>My<br>PlayList</strong></p>
-                </button>
-               
-                  
-
-            </aside>
+               <aside>
+            <button style="margin-top: 250px;">
+                <img src="images/mypageA.png" style="width:85px; padding:0;" alt="myPage Icon" onclick="location.href='mypageMain.jsp'">
+                <p><strong>My Page</strong></p>
+            </button>
+            <button style="margin-top: 50px;">
+                <img src="images/lookaround.png" style="width:85px; padding:0;" alt="MyPlaylist Icon" >
+                <p><strong>My<br>Playlist</strong></p>
+            </button>
+            <button style="margin-top: 50px;">
+                <img src="images/pixel_search.png" style="width:85px; padding:0;" alt="Search Icon" onclick="location.href='music_search.jsp'">
+                <p><strong>search</strong></p>
+            </button>
+            
+            
+        </aside>
             <section>
                 
            
                     <div class="bluetop" style="margin-top:20px; width:1200px;">
-                    <p style="margin-top:5px;" ><img src="./img/Save.png" style="height: 28px; float: left; margin-top: -8px; "><strong>My_PlayList</strong></p>
+                    <p style="margin-top:5px;" ><img src="images/Save.png" style="height: 28px; float: left; margin-top: -8px; "><strong>My_PlayList</strong></p>
                 </div>
                 <div style="width:1200px; height:30px; background-color: gray;">
                 <button id="backToList"><a href="playList.jsp">Back</a></button>
@@ -49,6 +54,9 @@
          
               
 				<%
+				 String id = (String) session.getAttribute("user_id");
+                MyPageDAO mypageDAO = new MyPageDAO();
+                UserInfo userinfo = mypageDAO.getMember(id);
 	//String=id 값을 가져오겠다.
 				String playlistIdValue = request.getParameter("playlistId");
 				int playlistId = Integer.parseInt(playlistIdValue);
@@ -65,12 +73,28 @@
 			%>
 			<h2 style="text-align: center; "><%=playlist.getPlaylistName() %> </h2>
 			<br>
-			<img src = "<%=playlist.getImage()%>" style="width:200px; height: 200px; margin-left:42%;">
+			<img src = "<%=playlist.getImage()%>" style="width:200px; height: 200px;text-align: center;">
 			<br>
 			
 			<p style="text-align: center;"> 노래들 : </p>
 			<br>
+			<% 
+			String musiclistIdValue = request.getParameter("playlistId");
+			int musiclistId = Integer.parseInt(musiclistIdValue);
 			
+			MusicListDAO musiclistDAO = new MusicListDAO();
+			List<MusicList> musiclist = musiclistDAO.getAllMusiclists(playlistId);
+			for(MusicList m: musiclist){
+				%>
+				<div><tr>
+					<th><Strong><%=m.getTitle()%></Strong>></th>
+					<th><p><%=m.getArtist()%></p></th>
+				</tr>
+				</div>
+
+			<%
+			}
+			%>
 			
 
 
@@ -86,7 +110,7 @@
 			
 			//마이페이지 버튼 누르면 이동
 			document.getElementById("gotoMyPageButton").addEventListener("click",()=>{
-				window.location.href = "myPage.jsp";
+				window.location.href = "mypageMain.jsp";
 			});
 			
 			//마이플레이리스트 버튼

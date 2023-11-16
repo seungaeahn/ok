@@ -21,22 +21,25 @@
 <body>
 <div class="container" style="margin-top:30px;">
             <aside>
-	                <button style="margin-top: 250px;" onclick="location.href='mypageMain.jsp'">
-	                    <img src="images/mypageA.png" style="width:85px; padding:0;" alt="myPage Icon">
-	                    <p><strong>mypage</strong></p>
-	                </button>
-	                <button style="margin-top: 50px;">
-	                    <img src="images/lookaround.png" style="width:85px; padding:0;" alt="lookaround Icon">
-	                    <p><strong>my<br>Playlist</strong></p>
-	                </button>
-	                <button id="gotoSearchButton" style="margin-top: 50px;" onclick="location.href='music_search.jsp'">
-	                    <img src="images/pixel_search.png" style="width:85px; padding:0;" alt="Search Icon">
-	                    <p><strong>search</strong></p>
-	                </button>
-	            </aside>
+            <button style="margin-top: 250px;">
+                <img src="images/mypageA.png" style="width:85px; padding:0;" alt="myPage Icon" onclick="location.href='mypageMain.jsp'">
+                <p><strong>My Page</strong></p>
+            </button>
+            <button style="margin-top: 50px;">
+                <img src="images/lookaround.png" style="width:85px; padding:0;" alt="MyPlaylist Icon" >
+                <p><strong>My<br>Playlist</strong></p>
+            </button>
+            <button style="margin-top: 50px;">
+                <img src="images/pixel_search.png" style="width:85px; padding:0;" alt="Search Icon" onclick="location.href='music_search.jsp'">
+                <p><strong>search</strong></p>
+            </button>
+            
+            
+        </aside>
+       
             <section>
                 <div class="bluetop" style="margin-top:20px; width:1200px;">
-                    <p style="margin-top:5px;" ><img src="./img/Save.png" style="height: 28px; float: left; margin-top: -8px; "><strong>My_PlayList</strong></p>
+                    <p style="margin-top:5px;" ><img src="images/Save.png" style="height: 28px; float: left; margin-top: -8px; "><strong>My_PlayList</strong></p>
                 </div>
                 <div style="width:1200px; height:30px; background-color: gray;">
                 <button id="new"><a href="PlayListCreate.jsp">NEW</a></button>
@@ -44,7 +47,7 @@
                 
                 
             </div>
-                <article id="articleP">
+      <article id="articleP">
                 <div style="text-align: center; margin-top: 0%;">
                 </div>
          
@@ -58,8 +61,9 @@
 		</tr>
 	</table>
 	<%
+	 String id_3 = (String) session.getAttribute("user_id");
 		PlayListDAO playlistDAO = new PlayListDAO();
-		List<PlayList> playlists = playlistDAO.getAllPlaylists();
+		List<PlayList> playlists = playlistDAO.getAllPlaylists(id_3);
 		
 		for(PlayList p : playlists){
 			%>
@@ -73,19 +77,19 @@
 				</div>
 				<div class="title-bar-controls">
 				<input type="hidden" name="playlistId" value="<%= p.getPlaylistId() %>">
-				<button type="submit" class="btn btn-default pull right">X</button>
+				<button type="submit" class="btn btn-default pull right"  onclick="DeleteCheck()">X</button>
 										
 										
 				</div></div>
 	
 				<td></td>
 
-				<td><a href="playListDetail.jsp?playlistId=<%=p.getPlaylistId()%>"><img src="<%=p.getImage()%>"style="width : 150px; height: 150px; margin-left:10px; margin-top:10px; border: 2px inset gray;"></a></td>
+				<td><a href="playListDetail.jsp?playlistId=<%=p.getPlaylistId()%>"><img src="<%=p.getImage()%>"style="width : 150px; height: 150px; margin-left:10px; margin-top:10px; border: 3px inset lightgray;"></a></td>
 				
 				<td>
-				<div style="float:right; width: 300px; text-align: left;">
-				<div style="margin-top:20px; width:200px; height: 30px;">
-				<p><%=p.getPlaylistName()%></p></div></div>
+				<div style="float:right; width: 300px; text-align: left; margin-right:100px; ">
+				<div style="background-color:white; margin-top:20px; padding-right: 20px; width:300px; height: 22px; border: 2px inset lightgray;">
+				<p style="margin-left: 30px; margin-top:1px;"><%=p.getPlaylistName()%></p></div></div>
 				</td>
 				
 				
@@ -94,6 +98,7 @@
 			</tr>
 			<br>
 			</form>
+
 			</div>
 			<%
 			
@@ -101,8 +106,25 @@
 	
 	%>
                 </article>
+                
                 </section>
-                    
+                     <aside>
+        
+		 <%
+	 	//만약 mno값이 존재할 경우 빈(null)값이 아닐경우
+	 	
+	 	if(session.getAttribute("user_id") != null){
+	 %>
+	 <button id="logoutButton" style="margin-top: 800px; margin-left: 1450px" onclick="location.href='logout.jsp'">
+         <img src="images/로그아웃.png" style="width:85px; padding:0;" alt="Logout Icon" >
+          <p style="margin-top: 7px;"><strong>Logout</strong></p>
+     </button>
+	 	
+	 <%
+	 	}
+	
+	%>
+        </aside>
 	
 	 <script>
             const List = document.getElementById("List");
@@ -128,7 +150,7 @@
 			
 			//마이페이지 버튼 누르면 이동
 			document.getElementById("gotoMyPageButton").addEventListener("click",()=>{
-				window.location.href = "myPage.jsp";
+				window.location.href = "mypageMain.jsp";
 			});
 			
 			//마이플레이리스트 버튼
@@ -148,6 +170,21 @@
 			document.getElementById("user_searchButton").addEventListener("click",()=>{
 				window.location.href = "user_search.jsp";
 			});
+			
+			function DeleteCheck(){
+				if(!confirm("이 플레이리스트를 삭제 하시겠습니까?")){
+					event.preventDefault();
+					return false;
+				}else{
+					
+					alert("선택하신 플레이리스트가 삭제 되었습니다.")
+					return true;
+					
+					/*
+					var btn = document.getElementsByClassName("btn btn-default pull right");
+					btn.submit();  이건 안써도됨
+					*/
+				};
         </script>
        
 </div>
