@@ -42,6 +42,7 @@ public class ModifyServlet extends HttpServlet {
 			String user_password = request.getParameter("user_password");
 			String email = request.getParameter("email");
 			String phone_number = request.getParameter("phone_number");
+			
 			Part profileInput = request.getPart("profileInput");
 			
 			System.out.println(user_id);

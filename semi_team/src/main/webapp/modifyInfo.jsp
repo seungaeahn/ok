@@ -66,16 +66,20 @@
                 </div>
                 
             
-                <div>
-                    <div id="profileContainer">
-                        <!-- 프로필 사진을 표시할 컨테이너 -->
-                        <img id="uploadProfile">
-                    </div>
-                    <label for="profileInput">
-                    <input type="file" id="profileInput" name="profileInput" accept="image/jpg" style="margin: 0 0 0 6%;">
-                    </label>
-                    <button id="profileUploadButton" type="button">프로필 등록</button>
-                </div>
+               <div>
+    <div id="profileContainer">
+        <!-- 프로필 사진을 표시할 컨테이너 -->
+        <img id="uploadProfile" src="<%=userinfo.getProfile_img()%>" alt="프로필 이미지">
+    </div>
+    <label for="profileInput">
+    <input type="file" id="profileInput" name="profileInput" accept="image/jpg" style="margin: 0 0 0 6%;">
+    </label>
+    <button id="profileUploadButton" type="button">프로필 등록</button>
+
+    
+    
+    
+</div>
                 <br>
                 <div>
                     <label for="email">
